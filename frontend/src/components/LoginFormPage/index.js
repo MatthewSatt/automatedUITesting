@@ -23,11 +23,21 @@ function LoginFormPage() {
       });
   };
 
+  const handleDemo = (e) => {
+    e.preventDefault();
+    setErrors([]);
+    return dispatch(sessionActions.login({ credential: "demo@user.io", password: "password"}))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      });
+  }
+
   return (
-    <>
+    <div className="loginform">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
+        <ul className="errors">
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
@@ -51,8 +61,9 @@ function LoginFormPage() {
           />
         </label>
         <button type="submit">Log In</button>
+        <button onClick={handleDemo} type="submit">Demo</button>
       </form>
-    </>
+    </div>
   );
 }
 
