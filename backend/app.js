@@ -21,6 +21,24 @@ if (!isProduction) {
     contentSecurityPolicy: false
   }));
 
+
+  const routes = require('./routes');
+
+  // ... routes here
+
+  app.use(routes); // Connect all the routes
+
+
+  // Resource not found handler
+  app.use((_req, _res, next) => {
+    const err = new Error("The requested resource couldn't be found.");
+    err.title = "Resource Not Found";
+    err.errors = ["The requested resource couldn't be found."];
+    err.status = 404;
+    next(err);
+  });
+
+
   // Set the _csrf token and create req.csrfToken method
   app.use(
     csurf({
@@ -31,24 +49,6 @@ if (!isProduction) {
       },
     })
   );
-
-  const routes = require('./routes');
-
-// ... routes here
-
-app.use(routes); // Connect all the routes
-
-
-// Resource not found handler
-app.use((_req, _res, next) => {
-  const err = new Error("The requested resource couldn't be found.");
-  err.title = "Resource Not Found";
-  err.errors = ["The requested resource couldn't be found."];
-  err.status = 404;
-  next(err);
-});
-
-
 
 // ...
 

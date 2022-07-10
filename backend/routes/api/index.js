@@ -1,23 +1,11 @@
-const router = require('express').Router();
-// GET /api/set-token-cookie
+const router = require("express").Router();
+const sessionRouter = require("./session.js");
+const usersRouter = require("./users.js");
+
+// // GET /api/set-token-cookie
 // const asyncHandler = require('express-async-handler');
 // const { setTokenCookie } = require('../../utils/auth.js');
 // const { User } = require('../../db/models');
-const sessionRouter = require('./session.js');
-const usersRouter = require('./users.js');
-
-router.use('/session', sessionRouter);
-
-router.use('/users', usersRouter);
-
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
-});
-
-module.exports = router;
-
-
-// // GET /api/set-token-cookie
 // router.get('/set-token-cookie', asyncHandler(async (req, res) => {
 //   const user = await User.findOne({
 //       where: {
@@ -47,3 +35,13 @@ module.exports = router;
 //     return res.json(req.user);
 //   }
 // );
+
+router.post("/test", function (req, res) {
+  res.json({ requestBody: req.body });
+});
+
+router.use("/session", sessionRouter);
+
+router.use("/users", usersRouter);
+
+module.exports = router;
